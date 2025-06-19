@@ -169,7 +169,7 @@ Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ## 10. Delegate Tokens to the Validator
 
-Back in the EVM interface, refaite la meme demarche que précedemment à savoir lock ROKO, bonded et ensuite go to **Delegate**, choose your validator's address, enter the amount, and confirm.
+Back in the EVM interface, repeat the same process as before: lock ROKO, bond it, then go to **Delegate**, choose your validator's address, enter the amount, and confirm.
 
 ![Interface EVM Nominate](assets/interfaceEVM_nominate.png)
 
