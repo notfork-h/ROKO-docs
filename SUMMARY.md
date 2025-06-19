@@ -6,5 +6,5 @@
 ## Resources
 
 * [Network Explorer](https://roko-explorer.ntfork.com/)
-* [EVM Interface](https://roko-evm-interface.com/)
-* [GitHub Repository](https://github.com/Roko-Network/ROKO-docs) 
+* [EVM Interface](https://roko-explorer.ntfork.com/#/evm)
+* [GitHub Repository](https://github.com/Roko-Network/roko_network) 
