@@ -1,0 +1,27 @@
+{
+  "title": "ROKO Network Documentation",
+  "description": "Complete guide for ROKO Network validator setup and operations",
+  "author": "ROKO Network Team",
+  "language": "en",
+  "gitbook": "3.2.3",
+  "structure": {
+    "readme": "README.md",
+    "summary": "SUMMARY.md"
+  },
+  "plugins": [
+    "github",
+    "edit-link",
+    "prism",
+    "-highlight",
+    "copy-code-button"
+  ],
+  "pluginsConfig": {
+    "github": {
+      "url": "https://github.com/Roko-Network/ROKO-docs"
+    },
+    "edit-link": {
+      "base": "https://github.com/Roko-Network/ROKO-docs/edit/main",
+      "label": "Edit This Page"
+    }
+  }
+} 
