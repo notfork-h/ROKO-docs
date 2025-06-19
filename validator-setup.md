@@ -131,7 +131,7 @@ Start your validator with the following command (replace placeholders as needed)
 ### 7.1 Generate an Address (Roko-explorer)
 
 1. Open [roko-explorer.nfork Apps](https://roko-explorer.ntfork.com/#/accounts/vanity)
-2. Click **Accounts → Vanity generator → start generation → Save ** and follow the wizard.
+2. Click **Accounts → Vanity generator → start generation → Save** and follow the wizard.
 
 ![Generate address](assets/GenerateAdress.png)
 
