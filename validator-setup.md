@@ -139,7 +139,8 @@ Start your validator with the following command (replace placeholders as needed)
 1. Copy your private key from roko-explorer.
 2. In MetaMask or Rabby, choose **Import Account**, paste the key.
 
-![Interface EVM Nominate](assets/interfaceEVM_nominate.png)
+![Import to EVM Wallet 1](assets/ImportToEVMWallet1.png)
+![Import to EVM Wallet 2](assets/ImportToEVMWallet2.png)
 
 ---
 
@@ -148,17 +149,9 @@ Start your validator with the following command (replace placeholders as needed)
 1. Navigate to the ROKO EVM interface.
 2. Use the faucet to request ROKO from **Alith** or **Baltathar** (each has 100 ROKO).
 
-![Import to EVM Wallet 1](assets/ImportToEVMWallet1.png)
-![Import to EVM Wallet 2](assets/ImportToEVMWallet2.png)
-
----
-
-## 9. Get test ROKO and Lock ROKO to pwROKO
-
-In the EVM interface, connect your wallet and go to **Get test Tokens** → **Send from Alith or Balthathar** , sign and submit.
-
 ![Interface EVM get Token](assets/EVMInterface_GetTOKEN.png)
 
+---
 
 Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
@@ -166,7 +159,7 @@ Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ---
 
-## 10. Stake & Set Session Keys (Polkadot.js)
+## 9. Stake & Set Session Keys (Polkadot.js)
 
 1. In Polkadot.js, switch to **Network → Staking → Accounts**.
 2. Click **+ Validator**, select your account, set the amount to bond.
@@ -177,7 +170,7 @@ Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ---
 
-## 11. Delegate Tokens to the Validator
+## 10. Delegate Tokens to the Validator
 
 Back in the EVM interface, refaite la meme demarche que précedemment à savoir lock ROKO, bonded et ensuite go to **Delegate**, choose your validator's address, enter the amount, and confirm.
 
