@@ -13,35 +13,7 @@ This guide walks you through setting up and running a validator node for the ROK
 
 ---
 
-## 2. Install System Dependencies
-
-```bash
-sudo apt update
-sudo apt install -y make clang pkg-config libssl-dev protobuf-compiler build-essential git curl llvm
-```
-
----
-
-## 3. Install Rust Toolchain
-
-1. Install `rustup` and set up the environment:
-
-   ```bash
-   curl https://sh.rustup.rs -sSf | sh
-   source $HOME/.cargo/env
-   ```
-
-2. Add nightly toolchain and targets:
-
-   ```bash
-   rustup update nightly
-   rustup component add rust-src
-   rustup target add wasm32-unknown-unknown --toolchain nightly
-   ```
-
----
-
-## 4. Clone and Build the Node
+## 2. Clone the repository
 
 1. **Clone** the repository:
 
@@ -49,18 +21,9 @@ sudo apt install -y make clang pkg-config libssl-dev protobuf-compiler build-ess
    git clone git@github.com:Roko-Network/roko_network.git
    cd roko_network
    ```
-
-2. **Compile** in release mode with the `testnet` feature:
-
-   ```bash
-   cargo build --release --features testnet
-   ```
-
 ---
 
-## 5. Generate Node Keys & Chain Specification
-
-
+## 3. Generate Node Keys & Chain Specification
 
 1. Set variables:
 
@@ -74,38 +37,37 @@ sudo apt install -y make clang pkg-config libssl-dev protobuf-compiler build-ess
 
    ```bash
    # Node key
-   ./target/release/substrate key generate-node-key --base-path $BASE_PATH
+   ./build/substrate key generate-node-key --base-path $BASE_PATH
 
    # GRANDPA
-   ./target/release/substrate key insert --key-type gran --scheme ed25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ed//$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type gran --scheme ed25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ed//$SESSION_KEYS_INDEX
 
    # BABE
-   ./target/release/substrate key insert --key-type babe --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type babe --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
 
    # IMON
-   ./target/release/substrate key insert --key-type imon --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type imon --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
 
    # AUTH
-   ./target/release/substrate key insert --key-type auth --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type auth --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
 
    # MUX
-   ./target/release/substrate key insert --key-type mixn --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type mixn --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
 
    # ECDSA
-   ./target/release/substrate key insert --key-type beef --scheme ecdsa --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ecdsa//$SESSION_KEYS_INDEX
+   ./build/substrate key insert --key-type beef --scheme ecdsa --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ecdsa//$SESSION_KEYS_INDEX
    ```
 
 ---
-Don't forget to copy your node key — it's necessary to connect your node to your account
 
-## 6. Run the Validator Node
+## 4. Run the Validator Node
 
 Start your validator with the following command (replace placeholders as needed) :
 
 **Note**: Make sure to download the chain specification file before running the validator. You can download it directly here: [testnet-chain-spec.json](https://raw.githubusercontent.com/notfork-h/ROKO-docs/main/testnet-chain-spec.json). Save this file in your project directory.
 
 ```bash
-./target/release/substrate \
+./build/substrate \
   --name "YOUR-VALIDATOR-NAME" \
   --base-path $BASE_PATH \
   --chain ./testnet-chain-spec.json \
@@ -118,15 +80,14 @@ Start your validator with the following command (replace placeholders as needed)
   --pruning 1000 \
   --trie-cache-size 0 \
   --log info,runtime::staking=debug \
-  --bootnodes /ip4/13.50.245.214/tcp/30333/p2p/12D3KooWJVbqNqrTKDeJG1UmDcqVj9GPAimS7SK68DjUGahCKJkN \
-  --bootnodes /ip4/13.49.127.240/tcp/30333/p2p/12D3KooWPD3N4Rw4DyZd3EcevMebVBPQadTHryeEHfxEYuAZctwQ
+  --bootnodes /ip4/13.50.245.214/tcp/30333/p2p/12D3KooWJVbqNqrTKDeJG1UmDcqVj9GPAimS7SK68DjUGahCKJkN 
 ```
 
 ---
 
-## 7. Create & Fund Your Account
+## 5. Create & Fund Your Account
 
-### 7.1 Generate an Address (Roko-explorer)
+### 5.1 Generate an Address (Roko-explorer)
 
 1. Open [roko-explorer.nfork Apps](https://roko-explorer.ntfork.com/#/accounts/vanity)
 2. Click **Accounts → Vanity generator → start generation → Save** and follow the wizard.
@@ -134,7 +95,7 @@ Start your validator with the following command (replace placeholders as needed)
 ![Generate address](assets/GenerateAdress.png)
 
 
-### 7.2 Import to EVM Wallet
+### 5.2 Import to EVM Wallet
 
 1. Copy your private key from roko-explorer.
 2. In MetaMask or Rabby, choose **Import Account**, paste the key.
@@ -144,7 +105,7 @@ Start your validator with the following command (replace placeholders as needed)
 
 ---
 
-## 8. Connect to EVM Interface & Get Test Tokens
+## 6. Connect to EVM Interface & Get Test Tokens
 
 1. Navigate to the ROKO EVM interface.
 2. Use the faucet to request ROKO from **Alith** or **Baltathar** (each has 100 ROKO).
@@ -156,18 +117,23 @@ Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ---
 
-## 9. Stake & Set Session Keys (Polkadot.js)
+## 7. Stake & Set Session Keys (Polkadot.js)
 
 1. In Polkadot.js, switch to **Network → Staking → Accounts**.
 2. Click **+ Validator**, select your account, set the amount to bond.
-3. Paste the session keys generated by your node. 
+3. Paste the session keys generated by your node using this command on your node computer:
+
+   ```bash
+   curl -s -H "Content-Type: application/json" -d '{"id":1,"jsonrpc":"2.0","method":"author_rotateKeys","params":[]}' http://localhost:9944
+   ```
+
 4. Confirm and submit the transaction.
 
 ![Link Account To Validator](assets/LinkAccountToValidator.png)
 
 ---
 
-## 10. Delegate Tokens to the Validator
+## 8. Delegate Tokens to the Validator
 
 Back in the EVM interface, repeat the same process as before: lock ROKO, bond it, then go to **Delegate**, choose your validator's address and confirm.
 
