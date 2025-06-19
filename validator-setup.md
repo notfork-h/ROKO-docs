@@ -186,11 +186,6 @@ Back in the EVM interface, refaite la meme demarche que précedemment à savoir 
 
 ---
 
-## Tips & Troubleshooting
-
-- Ensure your node's clock is synced (e.g., via `ntp`).
-- Check logs for errors: `journalctl -u your-node-service -f`.
-- For help, join the ROKO Network Discord or Telegram.
 
 *End of Guide*
 
