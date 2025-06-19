@@ -60,13 +60,9 @@ sudo apt install -y make clang pkg-config libssl-dev protobuf-compiler build-ess
 
 ## 5. Generate Node Keys & Chain Specification
 
-1. **Generate** the raw chain specification:
 
-   ```bash
-   ./target/release/substrate build-spec --raw --base-path db --chain dev --disable-default-bootnode > testnet-chain-spec.json
-   ```
 
-2. Set variables:
+1. Set variables:
 
    ```bash
    BASE_PATH="$HOME/data"
@@ -74,7 +70,7 @@ sudo apt install -y make clang pkg-config libssl-dev protobuf-compiler build-ess
    SESSION_KEYS_INDEX=0
    ```
 
-3. **Generate** and **insert** session keys:
+2. **Generate** and **insert** session keys:
 
    ```bash
    # Node key
