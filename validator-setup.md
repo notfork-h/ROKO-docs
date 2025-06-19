@@ -152,10 +152,7 @@ Start your validator with the following command (replace placeholders as needed)
 ![Interface EVM get Token](assets/EVMInterface_GetTOKEN.png)
 
 ---
-
 Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
-
-![Interface EVM Nominate](assets/interfaceEVM_nominate.png)
 
 ---
 
