@@ -102,7 +102,7 @@ Don't forget to copy your node key — it's necessary to connect your node to yo
 
 Start your validator with the following command (replace placeholders as needed) :
 
-**Note**: Make sure to download the chain specification file before running the validator. You can download it directly here: [testnet-chain-spec.json](https://raw.githubusercontent.com/Roko-Network/ROKO-docs/main/testnet-chain-spec.json). Save this file in your project directory.
+**Note**: Make sure to download the chain specification file before running the validator. You can download it directly here: [testnet-chain-spec.json](https://raw.githubusercontent.com/notfork-h/ROKO-docs/main/testnet-chain-spec.json). Save this file in your project directory.
 
 ```bash
 ./target/release/substrate \
