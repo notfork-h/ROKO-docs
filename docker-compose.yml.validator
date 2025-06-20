@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  init_validator_node:
+    image: unforkh/testnet-roko_network:latest
+    entrypoint: ["bash", "-c", "/usr/local/bin/validator_node_init.sh"]
+    environment:
+      - SESSION_KEYS_PASSWORD=root
+      - INDEX=0
+
+    volumes:
+      - $HOME/data:/data
+
+  validator_node:
+    image: unforkh/testnet-roko_network:latest
+    entrypoint: ["/usr/local/bin/substrate"]
+    command: [
+      "--name", "YOUR-VALIDATOR-NAME",
+      "--base-path", "/data",
+      "--database", "auto",
+      "--chain", "/usr/local/share/testnet-chain-spec.json",
+      "--validator",
+      "--port", "30333",
+      "--rpc-port", "9944",
+      "--unsafe-rpc-external",
+      "--rpc-cors", "all",
+      "--telemetry-url", "wss://telemetry.polkadot.io/submit/ 0",
+      "--pruning", "1000",
+      "--trie-cache-size", "0",
+      "--log", "info,runtime::staking=debug",
+      "--bootnodes", "/ip4/13.50.245.214/tcp/30333/p2p/12D3KooWJVbqNqrTKDeJG1UmDcqVj9GPAimS7SK68DjUGahCKJkN"
+    ]
+
+    ports:
+      - 30333:30333
+      - 9944:9944
+      - 9933:9933
+    
+    volumes:
+      - $HOME/data:/data
+    depends_on:
+      - init_validator_node

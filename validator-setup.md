@@ -6,121 +6,103 @@ This guide walks you through setting up and running a validator node for the ROK
 
 ## 1. Prerequisites
 
-- **Operating System**: Ubuntu 20.04 LTS or later (Debian-based Linux)
-- **Disk**: ≥ 20 GB free
-- **RAM**: ≥ 8 GB
+- Docker installed
+- **Disk**: ≥ 20 GB free space
+- **RAM**: ≥ 8 GB
 - **Network**: Open ports 30333 (p2p) and 9944 (RPC)
 
 ---
 
-## 2. Clone the repository
-
-1. **Clone** the repository:
+## 2. Create the Container Folder and Set Permissions
 
    ```bash
-   git clone git@github.com:Roko-Network/roko_network.git
-   cd roko_network
-   ```
----
-
-## 3. Generate Node Keys & Chain Specification
-
-1. Set variables:
-
-   ```bash
-   BASE_PATH="$HOME/data"
-   SESSION_KEYS_PASSWORD="your_password"
-   SESSION_KEYS_INDEX=0
-   ```
-
-2. **Generate** and **insert** session keys:
-
-   ```bash
-   # Node key
-   ./build/substrate key generate-node-key --base-path $BASE_PATH
-
-   # GRANDPA
-   ./build/substrate key insert --key-type gran --scheme ed25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ed//$SESSION_KEYS_INDEX
-
-   # BABE
-   ./build/substrate key insert --key-type babe --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
-
-   # IMON
-   ./build/substrate key insert --key-type imon --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
-
-   # AUTH
-   ./build/substrate key insert --key-type auth --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
-
-   # MUX
-   ./build/substrate key insert --key-type mixn --scheme sr25519 --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD/fir/sr/$SESSION_KEYS_INDEX
-
-   # ECDSA
-   ./build/substrate key insert --key-type beef --scheme ecdsa --base-path $BASE_PATH --suri //$SESSION_KEYS_PASSWORD//fir//ecdsa//$SESSION_KEYS_INDEX
+   mkdir -p $HOME/data && chmod 777 $HOME/data
    ```
 
 ---
 
-## 4. Run the Validator Node
+## 3. Download the Docker Compose File
 
-Start your validator with the following command (replace placeholders as needed) :
+Download the validator docker-compose configuration file:
 
-**Note**: Make sure to download the chain specification file before running the validator. You can download it directly here: [testnet-chain-spec.json](https://raw.githubusercontent.com/notfork-h/ROKO-docs/main/testnet-chain-spec.json). Save this file in your project directory.
+**[📥 Download docker-compose.yml.validator](./docker-compose.yml.validator)**
 
-```bash
-./build/substrate \
-  --name "YOUR-VALIDATOR-NAME" \
-  --base-path $BASE_PATH \
-  --chain ./testnet-chain-spec.json \
-  --validator \
-  --port 30333 \
-  --rpc-port 9944 \
-  --unsafe-rpc-external \
-  --rpc-cors all \
-  --telemetry-url "wss://telemetry.polkadot.io/submit/ 0" \
-  --pruning 1000 \
-  --trie-cache-size 0 \
-  --log info,runtime::staking=debug \
-  --bootnodes /ip4/13.50.245.214/tcp/30333/p2p/12D3KooWJVbqNqrTKDeJG1UmDcqVj9GPAimS7SK68DjUGahCKJkN 
-```
+Save this file in your working directory.
 
 ---
 
-## 5. Create & Fund Your Account
+## 4. Configure Your Docker Compose File
 
-### 5.1 Generate an Address (Roko-explorer)
+1. **Set your password and index in your docker-compose file (line 8 and 9):**
+   
+   The password and index are used to generate all keys for the node that are needed to run the node
 
-1. Open [roko-explorer.nfork Apps](https://roko-explorer.ntfork.com/#/accounts/vanity)
-2. Click **Accounts → Vanity generator → start generation → Save** and follow the wizard.
+   ```yml
+   - SESSION_KEYS_PASSWORD=your_password
+   - INDEX=0
+   ```
+
+
+2. **Change the name of your validator on line 18 of the docker compose file:**
+   
+   ```yml
+   "--name", "YOUR-VALIDATOR-NAME",
+   ```
+
+**Note:** If you want to change the container folder, don't forget to modify the volumes parameters in your docker-compose file.
+
+---
+
+## 5. Run the Validator Node and Verify It's Running
+
+1. **Start the node:**
+   
+   ```bash
+   docker-compose -f docker-compose.yml.validator up -d
+   ```
+
+2. **Verify that it's running:**
+
+   ```bash
+   docker-compose -f docker-compose.yml.validator logs -f
+   ```
+
+---
+
+## 6. Create & Fund Your Account
+
+### 6.1 Generate an Address (Roko Explorer)
+
+1. Open [roko-explorer.ntfork Apps](https://roko-explorer.ntfork.com/#/accounts/vanity)
+2. Click **Accounts → Vanity generator → Start generation → Save** and follow the wizard.
 
 ![Generate address](assets/GenerateAdress.png)
 
-
-### 5.2 Import to EVM Wallet
+### 6.2 Import to EVM Wallet
 
 1. Copy your private key from roko-explorer.
-2. In MetaMask or Rabby, choose **Import Account**, paste the key.
+2. In MetaMask or Rabby, choose **Import Account** and paste the key.
 
 ![Import to EVM Wallet 1](assets/ImportToEVMWallet1.png)
 ![Import to EVM Wallet 2](assets/ImportToEVMWallet2.png)
 
 ---
 
-## 6. Connect to EVM Interface & Get Test Tokens
+## 7. Connect to EVM Interface & Get Test Tokens
 
 1. Navigate to the ROKO EVM interface.
 2. Use the faucet to request ROKO from **Alith** or **Baltathar** (each has 100 ROKO).
 
 ![Interface EVM get Token](assets/EVMInterface_GetTOKEN.png)
 
-
 Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ---
 
-## 7. Stake & Set Session Keys (Polkadot.js)
+## 8. Stake & Set Session Keys (Polkadot.js)
 
 1. In Polkadot.js, switch to **Network → Staking → Accounts**.
-2. Click **+ Validator**, select your account, set the amount to bond.
+2. Click **+ Validator**, select your account, and set the amount to bond.
 3. Paste the session keys generated by your node using this command on your node computer:
 
    ```bash
@@ -133,15 +115,13 @@ Then go to **Lock & Mint**, select **ROKO → pwROKO**, and lock your tokens.
 
 ---
 
-## 8. Delegate Tokens to the Validator
+## 9. Delegate Tokens to the Validator
 
-Back in the EVM interface, repeat the same process as before: lock ROKO, bond it, then go to **Delegate**, choose your validator's address and confirm.
+Back in the EVM interface, repeat the same process as before: lock ROKO, bond it, then go to **Delegate**, choose your validator's address, and confirm.
 
 ![Interface EVM Nominate](assets/interfaceEVM_nominate.png)
 
-
 ---
 
-
-*End of Guide*
+**End of Guide**
 
