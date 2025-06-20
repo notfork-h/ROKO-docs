@@ -25,7 +25,7 @@ This guide walks you through setting up and running a validator node for the ROK
 
 Download the validator docker-compose configuration file:
 
-**[📥 Download docker-compose.yml.validator](./docker-compose.yml.validator)**
+**[📥 Download docker-compose.yml.validator](https://raw.githubusercontent.com/ROKO-Network/ROKO-docs/main/docker-compose.yml.validator)**
 
 Save this file in your working directory.
 
